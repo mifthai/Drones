@@ -18,4 +18,6 @@ public class MedicationDrone {
     @MapsId(value = "medicationId")
     @JoinColumn(name = "medicationId")
     private List<Medication> medicationList;
+
+    private byte deliveryStatus;
 }

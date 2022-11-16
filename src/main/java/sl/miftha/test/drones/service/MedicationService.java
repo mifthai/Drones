@@ -8,4 +8,9 @@ import sl.miftha.test.drones.repository.MedicationRepository;
 public class MedicationService {
     @Autowired
     private MedicationRepository medicationRepository;
+
+    public sl.miftha.test.drones.dto.Medication save(sl.miftha.test.drones.dto.Medication dto){
+        sl.miftha.test.drones.model.Medication  saved =  medicationRepository.save(dto.getMedicationEntity());
+        return saved.getDroneDTO();
+    }
 }
