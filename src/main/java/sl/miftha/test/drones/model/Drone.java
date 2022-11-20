@@ -1,19 +1,24 @@
 package sl.miftha.test.drones.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import sl.miftha.test.drones.dto.DroneDTO;
 import sl.miftha.test.drones.types.DroneModel;
 import sl.miftha.test.drones.types.DroneStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Drone {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Size(max = 100, message = "100 characters max")
     private String serialNumber;
@@ -23,15 +28,18 @@ public class Drone {
     @Max(value = 500, message = "500gr max")
     private int weightLimit;
 
+    @OneToMany
+    private List<MedicationDrone> medicationDroneList;
+
     private float batteryCapacity;
 
     private int state;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -75,15 +83,29 @@ public class Drone {
         this.state = state;
     }
 
-    public sl.miftha.test.drones.dto.Drone getDroneDTO(){
-        sl.miftha.test.drones.dto.Drone dto = new sl.miftha.test.drones.dto.Drone();
+    public List<MedicationDrone> getMedicationDroneList() {
+        return medicationDroneList;
+    }
+
+    public void setMedicationDroneList(List<MedicationDrone> medicationDroneList) {
+        this.medicationDroneList = medicationDroneList;
+    }
+
+    public void loadMedication(MedicationDrone medicationDrone){
+        if (medicationDrone == null) medicationDroneList = new ArrayList<>();
+        medicationDroneList.add(medicationDrone);
+    }
+
+    @JsonIgnore
+    public DroneDTO getDroneDTO(){
+        DroneDTO dto = new DroneDTO();
 
         dto.setId(getId());
         dto.setSerialNumber(getSerialNumber());
         dto.setModel(DroneModel.get(getModel()));
         dto.setWeightLimit(getWeightLimit());
         dto.setBatteryCapacity(getBatteryCapacity());
-        dto.setState(DroneStatus.get(getModel()));
+        dto.setState(DroneStatus.get(getState()));
 
         return dto;
     }

@@ -1,25 +1,28 @@
 package sl.miftha.test.drones.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import sl.miftha.test.drones.dto.MedicationDTO;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Medication {
    @Id
-   @GeneratedValue
-   private int id;
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_Medication")
+   private long id;
    private String name;
    private float weight;
    private String code;
    private byte[] image;
 
+   @OneToMany
+   private List<MedicationDrone> medicationDrone;
 
-   public int getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(int id) {
+   public void setId(long id) {
       this.id = id;
    }
 
@@ -55,9 +58,10 @@ public class Medication {
       this.image = image;
    }
 
-   public sl.miftha.test.drones.dto.Medication getDroneDTO(){
-      sl.miftha.test.drones.dto.Medication dto = new sl.miftha.test.drones.dto.Medication();
+   public MedicationDTO getMedicationDTO(){
+      MedicationDTO dto = new MedicationDTO();
 
+      dto.setId(getId());
       dto.setCode(getCode());
       dto.setName(getName());
       dto.setWeight(getWeight());

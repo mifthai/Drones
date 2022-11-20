@@ -12,4 +12,12 @@ public class MedicationDroneId implements Serializable {
 
     @Column(name = "medicationId")
     private long medicationId;
+
+    public MedicationDroneId() {
+    }
+
+    public MedicationDroneId(long droneId, long medicationId) {
+        this.droneId = droneId;
+        this.medicationId = medicationId;
+    }
 }

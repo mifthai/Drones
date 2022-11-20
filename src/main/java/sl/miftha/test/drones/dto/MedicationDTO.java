@@ -1,6 +1,8 @@
 package sl.miftha.test.drones.dto;
 
-public class Medication {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public class MedicationDTO {
    private long id;
    private String name;
    private float weight;
@@ -47,9 +49,11 @@ public class Medication {
       this.image = image;
    }
 
+   @JsonIgnore
    public sl.miftha.test.drones.model.Medication getMedicationEntity(){
       sl.miftha.test.drones.model.Medication entity = new sl.miftha.test.drones.model.Medication();
 
+      entity.setId(getId());
       entity.setCode(getCode());
       entity.setName(getName());
       entity.setWeight(getWeight());

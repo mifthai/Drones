@@ -1,21 +1,34 @@
 package sl.miftha.test.drones.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import sl.miftha.test.drones.types.DroneModel;
 import sl.miftha.test.drones.types.DroneStatus;
 
-public class Drone {
-    private int id;
+public class DroneDTO {
+    private long id;
     private String serialNumber;
     private DroneModel model;
     private int weightLimit;
     private float batteryCapacity;
     private DroneStatus state;
 
-    public int getId() {
+    public DroneDTO() {
+    }
+
+    public DroneDTO(int id, String serialNumber, DroneModel model, int weightLimit, float batteryCapacity, DroneStatus state) {
+        this.id = id;
+        this.serialNumber = serialNumber;
+        this.model = model;
+        this.weightLimit = weightLimit;
+        this.batteryCapacity = batteryCapacity;
+        this.state = state;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -59,6 +72,7 @@ public class Drone {
         this.state = state;
     }
 
+    @JsonIgnore
     public sl.miftha.test.drones.model.Drone getDroneEntity() {
         sl.miftha.test.drones.model.Drone entity = new sl.miftha.test.drones.model.Drone();
 
